@@ -2,6 +2,6 @@
 Watchdog based on MQTT protocol
 
 # modules
-# mqtt protocol => npm install mqtt
-# influx database => npm install influx
-# event emitter => npm install events 
+mqtt protocol => npm install mqtt
+influx database => npm install influx
+event emitter => npm install events 
