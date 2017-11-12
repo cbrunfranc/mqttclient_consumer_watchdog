@@ -7,7 +7,7 @@ function Start()
 {
   try
   {
-    //watchdog - attach SIGINT event
+    //watchdog - attach SIGINT event for clean close
     onSIGINTevent();
 
     //watchdog - started
@@ -27,7 +27,6 @@ function Start()
   catch (err)
   {
     watchdog_watchdog.Close();
-    console.log ('close');
   }
 }
 
@@ -46,7 +45,7 @@ function onSIGINTevent()
 
   process.on("SIGINT", function () {
     watchdog_watchdog.Close();
-    process.exit();
+    setTimeout (function () {process.exit(); }, 1000);
   });
 
 }
