@@ -1,5 +1,5 @@
-var influx_connection = '' ;
+var influx_status = '' ;
 
 //influx_connection.host = '';
 
-exports.influx_connection = influx_connection;
+exports.influx_status = influx_status;

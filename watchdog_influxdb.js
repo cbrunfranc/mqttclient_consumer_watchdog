@@ -1,5 +1,5 @@
 var influx = require ('influx');
-var influx_connection = '';
+var influx_status = '';
 
 function Start()
 {
@@ -8,13 +8,24 @@ function Start()
 
 function OnStart()
 {
+  //use ping - and set a variable
    var influx_connection  = new influx.InfluxDB ({host: 'localhost:3000',
    database: 'express_response_db', schema : []});
-   console.log (influx_connection.host);
-
 }
 
-exports.influx_connection = influx_connection.host;
+/*
+influx.ping(5000).then(hosts => {
+  hosts.forEach(host => {
+    if (host.online) {
+      console.log(`${host.url.host} responded in ${host.rtt}ms running ${host.version})`)
+    } else {
+      console.log(`${host.url.host} is offline :(`)
+    }
+  })
+})
+*/
+
+exports.influx_status = 0;
 exports.Start = Start;
 
 

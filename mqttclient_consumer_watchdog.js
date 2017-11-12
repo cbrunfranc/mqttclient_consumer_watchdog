@@ -10,8 +10,6 @@ function Start()
 
   //watchdog - InfluxDB Database
   watchdog_influxdb.Start();
-  config.influx_connection = watchdog_influxdb.influx_connection ;
-  console.log  (config.influx_connection);
 
   //Watchog - MQTT Broker
   watchdog_mqttbroker.Start();
