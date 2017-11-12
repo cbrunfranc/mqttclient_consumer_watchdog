@@ -5,6 +5,8 @@ var watchdog_influxdb = require ("./watchdog_influxdb.js");
 
 var watchdog_emitter = require("./watchdog_emitter.js");
 
+var mqttbroker_currentstate = 0;
+
 function Start()
 {
   watchdog_emitter.influxdb_event.on(watchdog_emitter.influxdb_event_online,OnStart);
@@ -14,29 +16,27 @@ function OnStart()
 {
   var mqttbroker = mqtt.connect(config.mqttbroker_host);
   mqttbroker.on ('connect', OnConnectToBroker);
-  mqttbroker.on ('disconnect', OnDisconnectToBroker);
+  mqttbroker.on ('close', OnDisconnectToBroker);
+  setInterval (UpdateState, 1000);
 }
 
 function OnConnectToBroker()
 {
-  UpdateState(1);
-  console.log ("mqtt_clientconsumer connected to mqtt broker...");
+  mqttbroker_currentstate = 1
 }
 
 function OnDisconnectToBroker()
 {
-  UpdateState(0);
-  //console.log ("mqtt_clientconsumer disconnected to mqtt broker...");
+  mqttbroker_currentstate = 0;
 }
 
-
-function UpdateState(currentState)
+function UpdateState()
 {
     watchdog_influxdb.influxdb.writePoints([
       {
-        measurement: 'watchdog',
-        tags: { host: 'mqttbroker' },
-        fields: { state: currentState },
+        measurement: 'watchdog2',
+        tags: { host: 'mqttbroker2' },
+        fields: { state: mqttbroker_currentstate},
       }
     ])
   }

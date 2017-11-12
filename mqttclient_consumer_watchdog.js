@@ -5,19 +5,50 @@ var watchdog_mqttbroker = require ("./watchdog_mqttbroker.js");
 
 function Start()
 {
-  //watchdog - started
-  watchdog_watchdog.OnStart();
+  try
+  {
+    //watchdog - attach SIGINT event
+    onSIGINTevent();
 
-  //Watchdog - MQTT Broker
-  watchdog_mqttbroker.Start();
+    //watchdog - started
+    watchdog_watchdog.Start();
 
-  //Watchdog - MQTT Client Consumer
-  //watchdog_mqttclientconsumer.Start();
+    //Watchdog - MQTT Broker
+    watchdog_mqttbroker.Start();
 
-  //watchdog - InfluxDB Database
-  //the influxdb watchdog will emit a message to start all watchdogs
-  //as message will be stored in the Influx database
-  watchdog_influxdb.Start();
+    //Watchdog - MQTT Client Consumer
+    //watchdog_mqttclientconsumer.Start();
+
+    //watchdog - InfluxDB Database
+    //the influxdb watchdog will emit a message to start all watchdogs
+    //as message will be stored in the Influx database
+    watchdog_influxdb.Start();
+  }
+  catch (err)
+  {
+    watchdog_watchdog.Close();
+    console.log ('close');
+  }
+}
+
+function onSIGINTevent()
+{
+  if (process.platform === "win32") {
+    var rl = require("readline").createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    rl.on("SIGINT", function () {
+      process.emit("SIGINT");
+    });
+  }
+
+  process.on("SIGINT", function () {
+    watchdog_watchdog.Close();
+    process.exit();
+  });
+
 }
 
 Start();
