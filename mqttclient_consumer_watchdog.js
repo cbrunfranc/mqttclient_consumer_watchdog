@@ -8,12 +8,11 @@ function Start()
   //watchdog - started
   watchdog_watchdog.OnStart();
 
-  //watchdog - InfluxDB Database
-  watchdog_influxdb.Start();
-
   //Watchog - MQTT Broker
   watchdog_mqttbroker.Start();
 
+  //watchdog - InfluxDB Database
+  watchdog_influxdb.Start();
 }
 
 Start();
