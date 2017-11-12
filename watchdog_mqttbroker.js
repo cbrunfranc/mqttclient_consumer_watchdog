@@ -1,9 +1,14 @@
 var mqtt = require ("mqtt");
+var watchdog_influxdb = require ("./watchdog_influxdb.js");
 
 function Start()
 {
+  OnStart();
+}
+
+function OnStart()
+{
   var mqttbroker = mqtt.connect('mqtt://localhost:1883');
-  //to do : init la valeur to state = not working
   mqttbroker.on ('connect', OnConnectToBroker);
   mqttbroker.on ('disconnect', OnDisconnectToBroker);
 }
