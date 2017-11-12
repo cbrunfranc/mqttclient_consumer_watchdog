@@ -1,4 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
-var jeu = new EventEmitter();
 
-exports.jeu = jeu ;
+var influxdb_event = new EventEmitter();
+
+exports.influxdb_event = influxdb_event ;

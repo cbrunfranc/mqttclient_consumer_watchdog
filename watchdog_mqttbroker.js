@@ -1,11 +1,11 @@
 var mqtt = require ("mqtt");
 var watchdog_influxdb = require ("./watchdog_influxdb.js");
 
-var emitter = require("./watchdog_emitter.js");
+var influxdb_event = require("./watchdog_emitter.js").influxdb_event;
 
 function Start()
 {
-  emitter.jeu.on('influx',OnStart);
+  influxdb_event.on('online',OnStart);
 }
 
 function OnStart()
