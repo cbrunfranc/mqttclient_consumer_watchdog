@@ -9,12 +9,14 @@ var mqttbroker_currentstate = 0;
 
 function Start()
 {
+  //watchdog_emitter.influxdb_event.on('error', (err) => {console.log('error')});
   watchdog_emitter.influxdb_event.on(watchdog_emitter.influxdb_event_online,OnStart);
 }
 
 function OnStart()
 {
-  var mqttbroker = mqtt.connect(config.mqttbroker_host);
+  //watchdog_emitter.influxdb_event.emit('error');
+  var mqttbroker = mqtt.connect(config.mqttbroker_config.mqttbroker_host);
   mqttbroker.on ('connect', OnConnectToBroker);
   mqttbroker.on ('close', OnDisconnectToBroker);
   setInterval (UpdateState, 1000);

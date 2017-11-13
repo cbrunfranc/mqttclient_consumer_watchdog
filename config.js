@@ -1,8 +1,9 @@
-var config = {};
+var influx_config = {};
+influx_config.influx_host = 'localhost:8086' ;
+influx_config.influx_db = 'express_response_db';
 
-config.influx_host = 'localhost:8086' ;
-config.influx_db = 'express_response_db';
+var mqttbroker_config = {};
+mqttbroker_config.mqttbroker_host = 'mqtt://localhost:1883';
 
-config.mqttbroker_host = 'mqtt://localhost:1883';
-
-exports.config = config;
+exports.influx_config = influx_config;
+exports.mqttbroker_config = mqttbroker_config;

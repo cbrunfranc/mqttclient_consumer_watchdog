@@ -2,13 +2,14 @@ var config = require ("./config.js");
 var watchdog_watchdog = require ("./watchdog_watchdog.js");
 var watchdog_influxdb = require ("./watchdog_influxdb.js");
 var watchdog_mqttbroker = require ("./watchdog_mqttbroker.js");
+var watchdog_shutdown = require ("./watchdog_shutdown.js");
 
 function Start()
 {
   try
   {
-    //watchdog - attach SIGINT event for clean close
-    onSIGINTevent();
+    //watchdog - initialize event for a graceful shutdown
+    watchdog_shutdown.Initialize();
 
     //watchdog - started
     watchdog_watchdog.Start();
@@ -26,28 +27,8 @@ function Start()
   }
   catch (err)
   {
-    watchdog_watchdog.Close();
+    watchdog_shutdown.GracefulShutdown(err);
   }
-}
-
-function onSIGINTevent()
-{
-  if (process.platform === "win32") {
-    var rl = require("readline").createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    rl.on("SIGINT", function () {
-      process.emit("SIGINT");
-    });
-  }
-
-  process.on("SIGINT", function () {
-    watchdog_watchdog.Close();
-    setTimeout (function () {process.exit(); }, 1000);
-  });
-
 }
 
 Start();
