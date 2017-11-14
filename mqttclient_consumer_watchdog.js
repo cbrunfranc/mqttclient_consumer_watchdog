@@ -21,8 +21,6 @@ function Start()
     //watchdog_mqttclientconsumer.Start();
 
     //watchdog - InfluxDB Database
-    //the influxdb watchdog will emit a message to start all watchdogs
-    //as message will be stored in the Influx database
     watchdog_influxdb.Start();
   }
   catch (err)
