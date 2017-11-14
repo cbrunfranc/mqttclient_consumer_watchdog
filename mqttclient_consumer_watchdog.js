@@ -21,7 +21,7 @@ function Start()
     //watchdog_mqttclientconsumer.Start();
 
     //watchdog - InfluxDB Database
-    //watchdog_influxdb.Start();
+    watchdog_influxdb.Start();
   }
   catch (err)
   {
