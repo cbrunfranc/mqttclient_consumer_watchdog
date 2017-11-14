@@ -12,6 +12,8 @@ function Start()
 
 function OnStart()
 {
+  watchdog_emitter.influxdb_event.emit (watchdog_emitter.influxdb_event_online,'');
+  /*  
   influxdb.ping(5000).then(hosts => {
     hosts.forEach(host => {
       if (host.online  &&  host.url.host == config.influx_config.influx_host) {
@@ -21,6 +23,7 @@ function OnStart()
       }
     })
   })
+  */
 }
 
 exports.influxdb = influxdb;
